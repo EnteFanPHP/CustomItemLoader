@@ -102,6 +102,8 @@ final class CustomItemProperties{
 
 		$runtimeId = $id + ($id > 0 ? 5000 : -5000);
 
+		$use_duration = (int)($data["use_duration"] ?? 32);
+
 		$allow_off_hand = (int) ($data["allow_off_hand"] ?? false);
 		$can_destroy_in_creative = (int) ($data["can_destroy_in_creative"] ?? false);
 		$creative_category = (int) ($data["creative_category"] ?? 1); // 1 건축 2 자연 3 아이템
@@ -156,7 +158,7 @@ final class CustomItemProperties{
 		$nbt = CompoundTag::create()
 			->setTag("components", CompoundTag::create()
 				->setTag("item_properties", CompoundTag::create()
-					->setInt("use_duration", 32)
+					->setInt("use_duration", $use_duration)
 					->setInt("use_animation", ($food === 1 ? 1 : 0)) // 2 is potion, but not now
 					->setByte("allow_off_hand", $allow_off_hand)
 					->setByte("can_destroy_in_creative", $can_destroy_in_creative)
@@ -195,7 +197,7 @@ final class CustomItemProperties{
 				->setString("saturation_modifier", "low")
 			);
 			$nbt->getCompoundTag("components")?->setTag("minecraft:use_duration", CompoundTag::create()
-				->setInt("value", 1)
+				->setInt("value", $use_duration)
 			);
 			$this->food = true;
 			$this->nutrition = $data["nutrition"];
